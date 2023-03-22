@@ -1,0 +1,15 @@
+version: "3"
+services:
+
+  nginx-server:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
