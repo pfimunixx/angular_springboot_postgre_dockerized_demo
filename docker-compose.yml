@@ -1,6 +1,14 @@
 version: "3"
 services:
 
+  angular-app:
+    build:
+      context: ./angular-app
+    ports:
+      - "8081:80"
+    networks:
+      - mynetwork
+
   nginx-server:
     build:
       context: .
