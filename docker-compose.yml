@@ -1,16 +1,18 @@
 version: "3.8"
 services:
 
+  
   angular-app:
     image: angular-app-image
     container_name: angular-app
     build:
       context: ./angular-app
     ports:
-      - "4200:4200"
+      - "4200:80"
     networks:
       - mynetwork
 
+  
   nginx-server:
     container_name: nginx-server
     image: nginx-image
@@ -18,10 +20,11 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     ports:
-      - "8000:8000"
+      - "8000:80"
     networks:
       - mynetwork
 
+  
   postgres:
     container_name: postgres
     image: postgres
@@ -35,12 +38,15 @@ services:
       - POSTGRES_DB=mydb
     networks:
       - mynetwork
+    volumes:
+      - mydbdata:/var/lib/postgresql/data
 
+  
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "pf@imunix.de"
+      PGADMIN_DEFAULT_EMAIL: "pf@imunixx.de"
       PGADMIN_DEFAULT_PASSWORD: "yacJanAin7"
     ports:
       - 80:80
@@ -48,7 +54,17 @@ services:
       - postgres
     networks:
       - mynetwork
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+      - ./pgadmin4:/root/.pgadmin
+
+
 
 networks:
   mynetwork:
     driver: bridge
+
+
+volumes:
+  mydbdata:
+  pgadmindata:
