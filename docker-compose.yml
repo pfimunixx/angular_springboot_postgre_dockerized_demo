@@ -13,6 +13,16 @@ services:
       - mynetwork
 
   
+  aprendiendo-angular:
+    image: aprendiendo-angular-image
+    container_name: aprendiendo-angular-app
+    build:
+      context: ./AprendiendoAngular
+    ports:
+      - "4201:80"
+    networks:
+      - mynetwork
+  
   nginx-server:
     container_name: nginx-server
     image: nginx-image

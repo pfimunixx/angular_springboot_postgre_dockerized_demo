@@ -1,0 +1,22 @@
+<section class="login">
+    <div class="container">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <input class="form-control" type="text" placeholder="Email" formControlName="email" [ngClass]="{'is-invalid':submitted && loginForm.controls['email'].errors}">
+            <div *ngIf="submitted && loginForm.controls['email'].errors" class="text-danger">
+                <span *ngIf="submitted && loginForm.controls['email'].errors['required']">
+                    Enter an email
+                </span>
+                <span *ngIf="submitted && loginForm.controls['email'].errors['email']">
+                    Enter a valid email
+                </span>
+            </div>
+            <input class="form-control" type="password" placeholder="Password" formControlName="password" [ngClass]="{'is-invalid':submitted && loginForm.controls['password'].errors}">
+            <div *ngIf="submitted && loginForm.controls['password'].errors" class="text-danger">
+                <span *ngIf="submitted && loginForm.controls['password'].errors['required']">
+                    Enter a password
+                </span>
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+</section>
