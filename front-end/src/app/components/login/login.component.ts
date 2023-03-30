@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'component-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
