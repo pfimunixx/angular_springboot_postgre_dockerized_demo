@@ -1,36 +1,9 @@
 <section class="register">
     <div class="container register__container">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <input class="form-control" type="text" placeholder="Email" formControlName="email" [ngClass]="{'is-invalid':submitted && registerForm.controls['email'].errors}">
-            <div *ngIf="submitted && registerForm.controls['email'].errors" class="text-danger">
-                <span *ngIf="submitted && registerForm.controls['email'].errors['required']">
-                    Enter an email
-                </span>
-                <span *ngIf="submitted && registerForm.controls['email'].errors['email']">
-                    Enter a valid email
-                </span>
-            </div>
-            <input class="form-control" type="password" placeholder="Password" formControlName="password" [ngClass]="{'is-invalid':submitted && registerForm.controls['password'].errors}">
-            <div *ngIf="submitted && registerForm.controls['password'].errors" class="text-danger">
-                <span *ngIf="submitted && registerForm.controls['password'].errors['required']">
-                    Enter a password
-                </span>
-                <span *ngIf="submitted && registerForm.controls['password'].errors['minLength']">
-                    The password must have at least 8 characters
-                </span>
-                <span *ngIf="submitted && registerForm.controls['password'].errors['pattern']">
-                    The password must be at least 8 characters long and contain a capital letter, a lower case letter, a number and a symbol
-                </span>
-            </div>
-            <input class="form-control" type="password" placeholder="Repeat password" formControlName="passwordConfirm" [ngClass]="{'is-invalid':submitted && registerForm.controls['passwordConfirm'].errors}">
-            <div *ngIf="submitted && registerForm.controls['passwordConfirm'].errors" class="text-danger">
-                <span *ngIf="submitted && registerForm.controls['passwordConfirm'].errors['required']">
-                    Confirm the password
-                </span>
-                <span *ngIf="submitted && registerForm.controls['passwordConfirm'].errors['mismatch']">
-                    The passwords do not match
-                </span>
-            </div>
+        <form #registerForm="ngForm" (ngSubmit)="onRegisterUser(registerForm)">
+            <input class="form-control" type="text" placeholder="Email" ngModel name="email">
+            <input class="form-control" type="password" placeholder="Password" ngModel name="password">
+            <input class="form-control" type="password" placeholder="Repeat password" ngModel name="passwordConfirm">
             <button class="btn btn-primary" type="submit">Register</button>
         </form>
     </div>

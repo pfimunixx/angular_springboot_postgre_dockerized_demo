@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
+import { User } from '../../domain/user';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'component-register',
@@ -7,43 +10,25 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./register.component.sass']
 })
 export class RegisterComponent {
-  registerForm!:FormGroup
-  submitted = false;
 
-  constructor(private formBuilder: FormBuilder){}
+
+  constructor(private formBuilder: FormBuilder, private userService: UserService){}
 
   ngOnInit(){
-    this.registerForm = this.formBuilder.group({
-      email:['', [
-        Validators.required, 
-        Validators.email]],
-      password:['',[
-        Validators.required, 
-        Validators.minLength(8),
-        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+-]).{8,}$')]],
-      passwordConfirm:['',[
-        Validators.required]]
-    }, { validator: this.passwordMatchValidator });
+
     
   }
 
-  passwordMatchValidator(formGroup: FormGroup) {
-    const passwordControl = formGroup.get('password');
-    const passwordConfirmControl = formGroup.get('passwordConfirm');
-    if (passwordControl && passwordConfirmControl) {
-      if (passwordControl.value !== passwordConfirmControl.value) {
-        passwordConfirmControl.setErrors({ mismatch: true });
-      } else {
-        passwordConfirmControl.setErrors(null);
+  onRegisterUser(registerForm: NgForm){    
+    this.userService.addUser(registerForm.value).subscribe(
+      (response: User) => {
+        console.log(response);
+        alert("User registered!")
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
       }
-    }
+    );
   }
 
-  onSubmit(){
-    this.submitted = true;
-    if(this.registerForm.invalid){
-      return
-    }
-    alert("Success");
-  }
 }

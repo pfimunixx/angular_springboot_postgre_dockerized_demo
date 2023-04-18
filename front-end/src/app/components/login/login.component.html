@@ -1,5 +1,14 @@
 <section class="login">
     <div class="container">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <input class="form-control" type="text" placeholder="Email" ngModel name="email">
+            <input class="form-control" type="password" placeholder="Password" ngModel name="password">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+</section>
+<!--<section class="login">
+    <div class="container">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <input class="form-control" type="text" placeholder="Email" formControlName="email" [ngClass]="{'is-invalid':submitted && loginForm.controls['email'].errors}">
             <div *ngIf="submitted && loginForm.controls['email'].errors" class="text-danger">
@@ -19,4 +28,4 @@
             <button class="btn btn-primary" type="submit">Login</button>
         </form>
     </div>
-</section>
+</section>-->

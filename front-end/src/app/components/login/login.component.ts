@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { User } from 'src/app/domain/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'component-login',
@@ -7,25 +10,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent {
-  loginForm!:FormGroup
-  submitted = false;
 
-  constructor(private formBuilder: FormBuilder){}
+  public loginUser!: User;
+
+  constructor(private formBuilder: FormBuilder, private userService: UserService){}
 
   ngOnInit(){
-    this.loginForm = this.formBuilder.group({
-      email:['', [
-        Validators.required, 
-        Validators.email]],
-      password:['',
-        Validators.required]
-    })    
+  
   }
-  onSubmit(){
-    this.submitted = true;
-    if(this.loginForm.invalid){
-      return
-    }
-    alert("Success");
+  onSubmit(loginForm: NgForm){
+    this.userService.login(loginForm.controls['email'].value, loginForm.controls['password'].value).subscribe(
+      (response: User) => {
+        alert("Login succed!");
+      },
+      (error: HttpErrorResponse) => {
+        alert("Incorrect username or password");
+      }
+    );
   }
 }
