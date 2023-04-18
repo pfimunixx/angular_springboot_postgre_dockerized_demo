@@ -3,14 +3,11 @@ package tech.getarrays.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.getarrays.backend.exception.UserNotFoundException;
-import tech.getarrays.backend.model.Profile;
 import tech.getarrays.backend.model.User;
 import tech.getarrays.backend.repository.UserRepo;
 
 import javax.transaction.Transactional;
-import java.net.PasswordAuthentication;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

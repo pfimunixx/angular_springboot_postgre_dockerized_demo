@@ -36,6 +36,11 @@ public class User implements Serializable {
     @Getter @Setter
     private List<Profile> profiles = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "selected_profile_id")
+    @Getter @Setter
+    private Profile selectedProfile;
+
     public User(){}
 
     public User(String email, String password, String userCode){
