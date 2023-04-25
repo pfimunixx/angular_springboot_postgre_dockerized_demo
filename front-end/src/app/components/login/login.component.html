@@ -1,9 +1,10 @@
 <section class="login">
-    <div class="container">
+    <div class="container login__container">
         <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
             <input class="form-control" type="text" placeholder="Email" ngModel name="email">
             <input class="form-control" type="password" placeholder="Password" ngModel name="password">
             <button class="btn btn-primary" type="submit">Login</button>
+            <div class="text-secondary">Already don't have an account? <a href="/register">Click here to register</a></div>
         </form>
     </div>
 </section>

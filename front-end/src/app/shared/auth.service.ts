@@ -8,6 +8,6 @@ export class AuthService {
   constructor() { }
 
   isLoggedIn() : boolean{
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('loggedUserId');
   }
 }

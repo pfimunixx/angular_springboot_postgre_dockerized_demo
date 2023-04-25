@@ -1,1 +1,143 @@
-<p>movemnts works!</p>
+<section class="movements" id="movements">
+    <div class="container movements__container">
+        <div class="movements__head_controls">
+            <button class="btn btn-success" (click)="onOpenModal(null, 'addIncome')">Add income</button>
+            <button class="btn btn-danger" (click)="onOpenModal(null, 'addExpense')">Add expense</button>
+            <form class="form-inline my-2 my-lg-0">
+                <input type="search" (ngModelChange)="searchMovements(key.value)" #key="ngModel" ngModel
+                name="key" id="searchMovement" class="form-control mr-sm-2" placeholder="Search movements..." required>
+            </form>
+         </div>
+        <table class="table table-striped" *ngIf="movements.length > 0">
+            <thead>
+              <tr>
+                <th scope="col" (click)="sortMovementsByConcept()">Concept</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let movement of movements | paginate:page_size:page_number" (click)="onOpenModal(movement, 'edit')">
+                <td>{{ movement.concept }}</td>
+                <td>{{ movement.description }}</td>
+                <td class="movements__amount" [class.text-danger]="movement.amount < 0" [class.text-success]="movement.amount >= 0">{{ movement.amount }}€</td>
+                <td>{{ movement.date | date:'MMM d, y - EEE' }}</td>
+              </tr>
+            </tbody>
+            <mat-paginator #paginator 
+                [length]="movements.length"
+                [pageSize]="page_size"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page"
+                (page)="handlePage($event)">
+            </mat-paginator>
+        </table>
+        <h1 *ngIf="movements.length === 0" class="display-1">No movements to show</h1>
+        <!-- Add Movement Modal -->
+        <div class="modal fade" id="addMovementModal" tabindex="-1" role="dialog" aria-labelledby="addMovementModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addMovementModalLabel">Add Movement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form #addMovementForm="ngForm" (ngSubmit)="onAddMovement(addMovementForm)">
+                            <div class="form-group">
+                                <input type="text" ngModel name="concept" class="form-control" id="concept" placeholder="Concept" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Description" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" ngModel name="amount" class="form-control" id="amount" placeholder="0.0" required>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose a date</mat-label>
+                                    <input ngModel name="date" id="date" matInput [matDatepicker]="picker" required>
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="add-movement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button [disabled]="addMovementForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Movement Modal -->
+        <div class="modal fade" id="editMovementModal" tabindex="-1" role="dialog" aria-labelledby="editMovementModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editMovementModalLabel">Edit Movement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form #editMovementForm="ngForm">
+                            <input type="hidden" ngModel="{{editMovement?.id}}" name="id" class="form-control" id="id" required>
+                            <div class="form-group">
+                                <input type="text" ngModel="{{editMovement?.concept}}" name="concept" class="form-control" id="concept" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" ngModel="{{editMovement?.description}}" name="description" class="form-control" id="description" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" ngModel="{{editMovement?.amount}}" name="amount" class="form-control" id="amount" required>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose a date</mat-label>
+                                    <input ngModel="{{editMovement?.date}}" name="date" id="date" matInput [matDatepicker]="picker01" required>
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker01"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker01></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="add-movement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button (click)="onUpdateMovement(editMovementForm.value)" [disabled]="editMovementForm.invalid" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button (click)="onOpenModal(editMovementForm.value, 'delete')" class="btn btn-danger" data-dismiss="modal">Delete movement</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Movement Modal -->
+        <div class="modal fade" id="deleteMovementModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Delete Movement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this movement?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button *ngIf="deleteMovement" (click)="onDeleteMovement(deleteMovement.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+</section>

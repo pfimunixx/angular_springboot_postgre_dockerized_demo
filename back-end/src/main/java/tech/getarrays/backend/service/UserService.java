@@ -47,6 +47,7 @@ public class UserService {
         userRepo.deleteUserById(id);
     }
 
+
     public User findUserByEmailAndPassword(String email, String password) {
         return userRepo.findUserByEmailAndPassword(email, password)
                 .orElseThrow(() -> new UserNotFoundException("User with email " + email + " and password " + password + " was not found"));

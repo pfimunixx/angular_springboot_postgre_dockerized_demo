@@ -1,25 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Movements</a>
+        <li [class.active]="movementsActive" class="nav-item active">
+          <a (click)="switchToMovements()" class="nav-link">Movements</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Insights</a>
+        <li [class.active]="profilesActive" class="nav-item">
+          <a (click)="switchToProfiles()" class="nav-link">Profiles</a>
         </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="#">Savings management</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Profiles</a>
+          <button (click)="onLogOut()" class="btn btn-primary">Log out</button>
         </li>
       </ul>
     </div>
 </nav>
 
-<app-profiles></app-profiles>
+<ng-container [ngSwitch]="componentName">
+  <app-profiles *ngSwitchCase="'profiles'"></app-profiles>
+  <app-movements *ngSwitchCase="'movements'"></app-movements>
+  <div *ngSwitchDefault>No component selected</div>
+</ng-container>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../../domain/user';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Sha256 } from 'src/app/encrypt/sha-256';
 
 @Component({
   selector: 'component-register',
@@ -11,24 +12,30 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RegisterComponent {
 
+  registerUser !: User
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService){}
+  constructor(private userService: UserService){}
 
-  ngOnInit(){
-
-    
-  }
-
-  onRegisterUser(registerForm: NgForm){    
-    this.userService.addUser(registerForm.value).subscribe(
-      (response: User) => {
-        console.log(response);
-        alert("User registered!")
+  onRegisterUser(registerForm: NgForm){
+    this.registerUser = registerForm.value;
+    this.registerUser.password = Sha256.encrypt(this.registerUser.password);
+    this.userService.getUserByEmail(this.registerUser.email).subscribe(
+      (response : User) => {
+        console.log(response)
+        alert("This email is already registered! Try with another one");
       },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
+      () => {
+        this.userService.addUser(this.registerUser).subscribe(
+          (response: User) => {
+            console.log(response);
+            alert("User registered!")
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
       }
-    );
+    )
   }
 
 }

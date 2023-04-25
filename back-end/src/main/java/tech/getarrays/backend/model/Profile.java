@@ -27,4 +27,8 @@ public class Profile {
     private User user;
 
     public Profile(){}
+
+    public Profile(String name) {
+        this.name = name;
+    }
 }

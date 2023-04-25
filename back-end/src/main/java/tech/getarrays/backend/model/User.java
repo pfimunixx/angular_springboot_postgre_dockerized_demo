@@ -2,11 +2,7 @@ package tech.getarrays.backend.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,15 +27,8 @@ public class User implements Serializable {
     @Getter @Setter
     private String userCode;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     @Getter @Setter
-    private List<Profile> profiles = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "selected_profile_id")
-    @Getter @Setter
-    private Profile selectedProfile;
+    private Long selectedProfileId;
 
     public User(){}
 
@@ -47,10 +36,5 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.userCode = userCode;
-    }
-
-    public void addProfile(Profile profile){
-        profile.setUser(this);
-        this.profiles.add(profile);
     }
 }

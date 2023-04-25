@@ -1,16 +1,16 @@
 <section class="profiles" id="profiles">
     <div class="container profiles__container">
-        <a class="btn btn-primary" (click)="onOpenModal(null, 'add')">add profile</a>
-    
-
+        <button class="btn btn-primary" (click)="onOpenModal(null, 'add')">Add profile</button>
         <div class="profiles__list">
-            <div *ngFor="let profile of profiles">
-                {{profile?.name}}
+            <div (click)="onSelectProfile(profile.id)" *ngFor="let profile of profiles" class="profiles__box" [ngClass]="{'selected': profile.id === loggedUser.selectedProfileId}">
+                {{profile?.name}}<br><br>
+                <div class="btn-group btn-group-sm">
+                    <a (click)="onOpenModal(profile, 'edit')" class="btn btn-primary tooltips" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                    <a (click)="onOpenModal(profile, 'delete')" class="btn btn-danger tooltips" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                 </div>
             </div>
         </div>
-
-    </div>      
-
+    </div>
     <!-- Add Profile Modal -->
     <div class="modal fade" id="addProfileModal" tabindex="-1" role="dialog" aria-labelledby="addProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -33,6 +33,51 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile {{editProfile?.name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #editProfileForm="ngForm">
+                        <div class="form-group">
+                            <input type="hidden" ngModel="{{editProfile?.id}}" name="id" class="form-control" id="id" required>
+                            <input type="text" ngModel="{{editProfile?.name}}" name="name" class="form-control" id="name" placeholder="Profile name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="add-profile-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button (click)="onUpdateProfile(editProfileForm.value)" [disabled]="editProfileForm.invalid" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Profile Modal -->
+    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Delete Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete profile {{deleteProfile?.name}}?</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button *ngIf="deleteProfile" (click)="onDeleteProfile(deleteProfile.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </section>

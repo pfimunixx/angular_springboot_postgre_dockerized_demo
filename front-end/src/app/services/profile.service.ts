@@ -13,7 +13,23 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  public getProfiles(user_id : number): Observable<any> {
+  public getUserProfiles(user_id : number): Observable<any> {
     return this.http.get<Profile[]>(`${this.apiServerUrl}/profile/${user_id}/all`);
+  }
+
+  public getProfileById(profileId : number): Observable<Profile> {
+    return this.http.get<Profile>(`${this.apiServerUrl}/profile/find/${profileId}`);
+  }
+
+  public updateProfile(profile : Profile): Observable<Profile> {
+    return this.http.put<Profile>(`${this.apiServerUrl}/profile/update`, profile);
+  }
+
+  public addProfile(profile : Profile){
+    return this.http.post<Profile>(`${this.apiServerUrl}/profile/add`, profile);
+  }
+
+  public deleteProfile(profileId : number) {
+    return this.http.delete<void>(`${this.apiServerUrl}/profile/delete/${profileId}`);
   }
 }

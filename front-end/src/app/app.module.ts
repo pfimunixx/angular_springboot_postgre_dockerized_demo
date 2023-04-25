@@ -17,6 +17,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './shared/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { PaginatePipe } from './pipes/paginate.pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const appRoutes:Routes=[
   {path:'register', component:RegisterView},
@@ -36,7 +43,8 @@ const appRoutes:Routes=[
     UsersComponent,
     MovementsComponent,
     UserPortalComponent,
-    ProfilesComponent
+    ProfilesComponent,
+    PaginatePipe
   ],
   imports: [
     BrowserModule,
@@ -44,6 +52,12 @@ const appRoutes:Routes=[
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

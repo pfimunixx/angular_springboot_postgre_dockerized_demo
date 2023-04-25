@@ -57,17 +57,6 @@ public class UserResource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/add-profile")
-    public ResponseEntity<Profile> addProfile(@PathVariable Long id, @RequestBody Profile profile) {
-        User user = userService.findUserById(id);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        user.addProfile(profile);
-        userService.updateUser(user);
-        return new ResponseEntity<>(profile, HttpStatus.CREATED);
-    }
-
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<User> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {

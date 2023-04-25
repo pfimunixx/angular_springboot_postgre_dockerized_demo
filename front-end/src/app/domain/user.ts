@@ -3,4 +3,5 @@ export interface User{
     email : string;
     password : string;
     userCode : string;
+    selectedProfileId : number;
 }
