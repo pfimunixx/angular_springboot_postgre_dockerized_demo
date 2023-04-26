@@ -16,8 +16,8 @@ export class ProfilesComponent {
   public loggedUser !: User;
   public profiles !: Profile[];
   public addProfile !: Profile;
-  public deleteProfile !: Profile;
-  public editProfile !: Profile;
+  public deleteProfile ?: Profile;
+  public editProfile ?: Profile;
   public userDataLoaded : boolean = false;
 
   constructor(private userService: UserService, private profileService: ProfileService){}

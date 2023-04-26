@@ -1,40 +1,6 @@
 version: "3.8"
 services:
 
-  
-  angular-app:
-    image: angular-app-image
-    container_name: angular-app
-    build:
-      context: ./angular-app
-    ports:
-      - "4200:80"
-    networks:
-      - mynetwork
-
-  
-  aprendiendo-angular:
-    image: aprendiendo-angular-image
-    container_name: aprendiendo-angular-app
-    build:
-      context: ./AprendiendoAngular
-    ports:
-      - "4201:80"
-    networks:
-      - mynetwork
-  
-  nginx-server:
-    container_name: nginx-server
-    image: nginx-image
-    build:
-      context: .
-      dockerfile: nginx/Dockerfile
-    ports:
-      - "8000:80"
-    networks:
-      - mynetwork
-
-  
   postgres:
     container_name: postgres
     image: postgres
@@ -68,11 +34,36 @@ services:
       - pgadmindata:/var/lib/pgadmin
       - ./pgadmin4:/root/.pgadmin
 
+  back-end:
+    container_name: back-end
+    image: back-end-image
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - mynetwork
+
+  front-end:
+    image: front-end-image
+    container_name: front-end
+    build:
+      context: ./front-end
+    ports:
+      - "4200:4200"
+    depends_on:
+      - back-end
+    networks:
+      - mynetwork
 
 
 networks:
   mynetwork:
     driver: bridge
+    name: mynetwork
 
 
 volumes:

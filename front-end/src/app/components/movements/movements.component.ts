@@ -19,8 +19,8 @@ export class MovementsComponent {
   public selectedProfile !: Profile;
   public movements !: Movement[];
   public addMovement !: Movement;
-  public editMovement !: Movement;
-  public deleteMovement !: Movement;
+  public editMovement ?: Movement;
+  public deleteMovement ?: Movement;
   public profileDataLoaded : boolean = false;
   public isIncome !: boolean;
   page_size: number = 10;
