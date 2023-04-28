@@ -59,6 +59,19 @@ services:
     networks:
       - mynetwork
 
+  nginx-server:
+    container_name: nginx-server
+    image: nginx-image
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - front-end
+    networks:
+      - mynetwork
+
 
 networks:
   mynetwork:
