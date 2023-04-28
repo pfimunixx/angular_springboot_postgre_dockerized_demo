@@ -7,6 +7,8 @@ import { MovementService } from 'src/app/services/movement.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import Decimal from 'decimal.js';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -18,22 +20,23 @@ export class MovementsComponent {
 
   public selectedProfile !: Profile;
   public movements !: Movement[];
+  public matMovements !: MatTableDataSource<Movement>;
   public addMovement !: Movement;
   public editMovement ?: Movement;
   public deleteMovement ?: Movement;
   public profileDataLoaded : boolean = false;
   public isIncome !: boolean;
-  page_size: number = 10;
-  page_number: number = 1;
+  displayedColumns: string[] = ['Concept', 'Description', 'Amount', 'Date'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private profileService: ProfileService, private movementService : MovementService){
-
+    this.getSelectedProfile();
+    this.getMovements();
   }
 
   ngOnInit(){
-    this.getSelectedProfile();
-    this.getMovements();
+
   }
 
   getSelectedProfile() {
@@ -55,6 +58,9 @@ export class MovementsComponent {
     this.movementService.getProfileMovements(this.selectedProfile.id).subscribe(
       (response: Movement[]) => {
         this.movements = response;
+        this.matMovements = new MatTableDataSource(response);
+        this.matMovements.paginator = this.paginator;
+        this.matMovements.sort = this.sort;
         console.log(this.movements);
       },
       (error : HttpErrorResponse) => {
@@ -136,11 +142,6 @@ export class MovementsComponent {
       }
       return 0;
     });
-  }
-
-  handlePage(e: PageEvent) {
-    this.page_size = e.pageSize;
-    this.page_number = e.pageIndex + 1;
   }
 
   public onOpenModal(movement : Movement | null, mode: string): void {

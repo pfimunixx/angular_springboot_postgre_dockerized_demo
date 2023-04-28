@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/domain/user';
 import { Sha256 } from 'src/app/encrypt/sha-256';
+import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class LoginComponent {
     this.userService.login(loginForm.controls['email'].value, Sha256.encrypt(loginForm.controls['password'].value)).subscribe(
       (response: User) => {
         localStorage.setItem('loggedUserId', response.id.toString());
-        localStorage.setItem('selectedProfileId',response.selectedProfileId.toString())
+        localStorage.setItem('selectedProfileId',response.selectedProfileId.toString());
         this.router.navigate(['user-portal']);
 
       },

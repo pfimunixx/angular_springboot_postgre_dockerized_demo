@@ -24,6 +24,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PaginatePipe } from './pipes/paginate.pipe';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 const appRoutes:Routes=[
   {path:'register', component:RegisterView},
@@ -54,10 +56,13 @@ const appRoutes:Routes=[
     FormsModule,
     BrowserAnimationsModule,
     MatDatepickerModule,
-    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     MatFormFieldModule,
-    MatNativeDateModule,
-    MatPaginatorModule
+    MatInputModule,
+    FormsModule,
+    MatNativeDateModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
