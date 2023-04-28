@@ -144,6 +144,15 @@ export class MovementsComponent {
     });
   }
 
+  applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.matMovements.filter = filterValue.trim().toLowerCase();
+
+      if (this.matMovements.paginator) {
+        this.matMovements.paginator.firstPage();
+      }
+  }
+
   public onOpenModal(movement : Movement | null, mode: string): void {
     const container = document.getElementById('movements')!;
     const button = document.createElement('button');

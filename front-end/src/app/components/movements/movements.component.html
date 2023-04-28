@@ -4,13 +4,13 @@
             <button class="btn btn-success" (click)="onOpenModal(null, 'addIncome')">Add income</button>
             <button class="btn btn-danger" (click)="onOpenModal(null, 'addExpense')">Add expense</button>
             <form class="form-inline my-2 my-lg-0">
-                <input type="search" (ngModelChange)="searchMovements(key.value)" #key="ngModel" ngModel
+                <input type="search" matInput (keyup)="applyFilter($event)" #key="ngModel" ngModel
                 name="key" id="searchMovement" class="form-control mr-sm-2" placeholder="Search movements..." required>
             </form>
          </div>
 
 
-        <table class="table table-striped" mat-table [dataSource]="matMovements" matSort>
+        <table *ngIf="matMovements.data.length > 0" class="table table-striped" mat-table [dataSource]="matMovements" matSort>
             <ng-container matColumnDef="Concept">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Concept</th>
                 <td mat-cell *matCellDef="let movement" (click)="onOpenModal(movement, 'edit')">{{movement.concept}}</td>
@@ -21,19 +21,19 @@
             </ng-container>
             <ng-container matColumnDef="Amount">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-                <td mat-cell *matCellDef="let movement" (click)="onOpenModal(movement, 'edit')">{{movement.amount}}</td>
+                <td mat-cell *matCellDef="let movement" [class.text-danger]="movement.amount < 0" [class.text-success]="movement.amount >= 0" (click)="onOpenModal(movement, 'edit')">{{movement.amount}}€</td>
             </ng-container>
             <ng-container matColumnDef="Date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-                <td mat-cell *matCellDef="let movement" (click)="onOpenModal(movement, 'edit')">{{movement.date}}</td>
+                <td mat-cell *matCellDef="let movement" (click)="onOpenModal(movement, 'edit')">{{movement.date | date: 'MMM, dd EEE'}}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let movement; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <mat-paginator *ngIf="matMovements.data.length > 0" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 
-
+        <h1 *ngIf="matMovements.data.length === 0">No movements to show</h1>
 
         <!-- Add Movement Modal -->
         <div class="modal fade" id="addMovementModal" tabindex="-1" role="dialog" aria-labelledby="addMovementModalLabel" aria-hidden="true">
