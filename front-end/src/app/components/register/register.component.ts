@@ -16,11 +16,44 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
 
   registerUser !: User
+  registerForm!:FormGroup
+  submitted = false;
 
-  constructor(private userService: UserService, private profileService: ProfileService, private router : Router){}
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private profileService: ProfileService, private router : Router){}
 
-  onRegisterUser(registerForm: NgForm){
-    this.registerUser = registerForm.value;
+  ngOnInit(){
+    this.registerForm = this.formBuilder.group({
+      email:['', [
+        Validators.required, 
+        Validators.email]],
+      password:['',[
+        Validators.required, 
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+-]).{8,}$')]],
+      passwordConfirm:['',[
+        Validators.required]]
+    }, { validator: this.passwordMatchValidator });
+    
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const passwordControl = formGroup.get('password');
+    const passwordConfirmControl = formGroup.get('passwordConfirm');
+    if (passwordControl && passwordConfirmControl) {
+      if (passwordControl.value !== passwordConfirmControl.value) {
+        passwordConfirmControl.setErrors({ mismatch: true });
+      } else {
+        passwordConfirmControl.setErrors(null);
+      }
+    }
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if(this.registerForm.invalid){
+      return
+    }
+    this.registerUser = this.registerForm.value;
     this.registerUser.password = Sha256.encrypt(this.registerUser.password);
     this.userService.getUserByEmail(this.registerUser.email).subscribe(
       (response : User) => {
@@ -62,7 +95,11 @@ export class RegisterComponent {
           }
         );
       }
-    )
+    )  
+  }
+
+  onRegisterUser(registerForm: NgForm){
+
   }
 
 }

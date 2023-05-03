@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/domain/user';
 import { Sha256 } from 'src/app/encrypt/sha-256';
-import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,15 +13,29 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent {
 
-  public loginUser!: User;
+  public loginForm !: FormGroup;
+  submitted = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router : Router){}
 
   ngOnInit(){
-  
+    this.loginForm = this.formBuilder.group({
+      email:['', [
+        Validators.required, 
+        Validators.email]],
+      password:['',
+        Validators.required]
+    })    
   }
-  onSubmit(loginForm: NgForm){
-    this.userService.login(loginForm.controls['email'].value, Sha256.encrypt(loginForm.controls['password'].value)).subscribe(
+
+  onLogin(){
+    this.submitted = true;
+    if(this.loginForm.invalid){
+      return
+    }
+    const emailValue = this.loginForm.controls['email'].value.toString();
+    const passwordValue = this.loginForm.controls['password'].value.toString();
+    this.userService.login(emailValue, Sha256.encrypt(passwordValue)).subscribe(
       (response: User) => {
         localStorage.setItem('loggedUserId', response.id.toString());
         localStorage.setItem('selectedProfileId',response.selectedProfileId.toString());
