@@ -53,4 +53,9 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with email " + email + " and password " + password + " was not found"));
     }
 
+    public void sendConfirmationEmail(String toEmail){
+        EmailSenderService ess = new EmailSenderService();
+        ess.sendEmail("pfadarraga@gmail.com", "aaa","aaa");
+    }
+
 }

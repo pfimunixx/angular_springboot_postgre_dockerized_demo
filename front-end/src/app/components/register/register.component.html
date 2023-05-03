@@ -1,9 +1,12 @@
 <section class="register">
     <div class="container register__container">
         <form #registerForm="ngForm" (ngSubmit)="onRegisterUser(registerForm)">
-            <input class="form-control" type="text" placeholder="Email" ngModel name="email">
-            <input class="form-control" type="password" placeholder="Password" ngModel name="password">
-            <input class="form-control" type="password" placeholder="Repeat password" ngModel name="passwordConfirm">
+            <input class="form-control" type="text" placeholder="Email" ngModel name="email" required>
+            <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                <small class="text-danger">Email is required</small>
+              </div>
+            <input class="form-control" type="password" placeholder="Password" ngModel name="password" required>
+            <input class="form-control" type="password" placeholder="Repeat password" ngModel name="passwordConfirm" required>
             <button class="btn btn-primary" type="submit">Register</button>
             <div class="text-secondary">Already have an account? <a href="/login">Click here to login</a></div>
         </form>
