@@ -31,10 +31,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let movement; columns: displayedColumns;"></tr>
         </table>
+
         <mat-paginator *ngIf="matMovements && matMovements.data.length > 0" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 
         <h1 *ngIf="matMovements && matMovements.data.length === 0">No movements to show</h1>
-
         <h1 *ngIf="matMovements && matMovements.data.length > 0" class="movements__balance" [class.text-danger]="balance.toNumber() < 0" [class.text-success]="balance.toNumber() >= 0">{{ balance }}€</h1>
 
         <!-- Add Movement Modal -->

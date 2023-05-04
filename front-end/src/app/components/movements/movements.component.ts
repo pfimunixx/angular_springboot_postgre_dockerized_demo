@@ -80,6 +80,9 @@ export class MovementsComponent {
     this.movementService.getProfileMovements(this.selectedProfile.id).subscribe(
       (response: Movement[]) => {
         this.movements = response;
+        response.sort((a, b) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
         this.matMovements = new MatTableDataSource(response);
         this.matMovements.paginator = this.paginator;
         this.matMovements.sort = this.sort;
