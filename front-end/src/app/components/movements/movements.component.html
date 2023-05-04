@@ -10,7 +10,7 @@
          </div>
 
 
-        <table *ngIf="matMovements.data.length > 0" class="table table-striped" mat-table [dataSource]="matMovements" matSort>
+        <table *ngIf="matMovements && matMovements.data.length > 0" class="table table-striped" mat-table [dataSource]="matMovements" matSort>
             <ng-container matColumnDef="Concept">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Concept</th>
                 <td mat-cell *matCellDef="let movement" (click)="onOpenModal(movement, 'edit')">{{movement.concept}}</td>
@@ -31,9 +31,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let movement; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator *ngIf="matMovements.data.length > 0" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <mat-paginator *ngIf="matMovements && matMovements.data.length > 0" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 
-        <h1 *ngIf="matMovements.data.length === 0">No movements to show</h1>
+        <h1 *ngIf="matMovements && matMovements.data.length === 0">No movements to show</h1>
+
+        <h1 *ngIf="matMovements && matMovements.data.length > 0" class="movements__balance" [class.text-danger]="balance.toNumber() < 0" [class.text-success]="balance.toNumber() >= 0">{{ balance }}€</h1>
 
         <!-- Add Movement Modal -->
         <div class="modal fade" id="addMovementModal" tabindex="-1" role="dialog" aria-labelledby="addMovementModalLabel" aria-hidden="true">
@@ -41,33 +43,56 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addMovementModalLabel">Add Movement</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetAddMovementForm()">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form #addMovementForm="ngForm" (ngSubmit)="onAddMovement(addMovementForm)">
+                        <form [formGroup]="addMovementForm" (ngSubmit)="onAddMovement()">
                             <div class="form-group">
-                                <input type="text" ngModel name="concept" class="form-control" id="concept" placeholder="Concept" required>
+                                <input type="text" name="concept" class="form-control" id="concept" placeholder="Concept" formControlName="concept" [ngClass]="{'is-invalid':submitted && addMovementForm.controls['concept'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addMovementForm.controls['concept'].errors" class="text-danger">
+                                <span *ngIf="submitted && addMovementForm.controls['concept'].errors['required']">
+                                    Enter a concept
+                                </span>
                             </div>
                             <div class="form-group">
-                                <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Description" required>
+                                <input type="text" name="description" class="form-control" id="description" placeholder="Description" formControlName="description" [ngClass]="{'is-invalid':submitted && addMovementForm.controls['description'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addMovementForm.controls['description'].errors" class="text-danger">
+                                <span *ngIf="submitted && addMovementForm.controls['description'].errors['maxLength']">
+                                    Description is too long (200 characters maximum)
+                                </span>
                             </div>
                             <div class="form-group">
-                                <input type="number" ngModel name="amount" class="form-control" id="amount" placeholder="0.0" required>
+                                <input type="number" name="amount" class="form-control" id="amount" placeholder="0.0" formControlName="amount" [ngClass]="{'is-invalid':submitted && addMovementForm.controls['amount'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addMovementForm.controls['amount'].errors" class="text-danger">
+                                <span *ngIf="submitted && addMovementForm.controls['amount'].errors?.['required']">
+                                    Enter an amount
+                                </span>
+                                <span *ngIf="submitted && addMovementForm.controls['amount'].errors?.['pattern']">
+                                    Enter a positive value with 2 decimals (0.00)
+                                </span>
                             </div>
                             <div class="form-group">
                                 <mat-form-field appearance="fill">
                                     <mat-label>Choose a date</mat-label>
-                                    <input ngModel name="date" id="date" matInput [matDatepicker]="picker" required>
+                                    <input name="date" id="date" matInput [matDatepicker]="picker" formControlName="date" [ngClass]="{'is-invalid':submitted && addMovementForm.controls['date'].errors}">
                                     <mat-hint>MM/DD/YYYY</mat-hint>
                                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>                            
+                                </mat-form-field>
+                                <div *ngIf="submitted && addMovementForm.controls['date'].errors" class="text-danger">
+                                    <span *ngIf="submitted && addMovementForm.controls['date'].errors?.['required']">
+                                        Enter a date
+                                    </span>
+                                </div>                            
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="add-movement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button [disabled]="addMovementForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+                                <button type="button" id="add-movement-form" class="btn btn-secondary" data-dismiss="modal" (click)="resetAddMovementForm()">Close</button>
+                                <button type="submit" class="btn btn-primary" >Save changes</button>
                             </div>
                         </form>
                     </div>
@@ -92,7 +117,7 @@
                                 <input type="text" ngModel="{{editMovement?.concept}}" name="concept" class="form-control" id="concept" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" ngModel="{{editMovement?.description}}" name="description" class="form-control" id="description" required>
+                                <input type="text" ngModel="{{editMovement?.description}}" name="description" class="form-control" id="description">
                             </div>
                             <div class="form-group">
                                 <input type="number" ngModel="{{editMovement?.amount}}" name="amount" class="form-control" id="amount" required>
