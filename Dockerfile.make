@@ -2,6 +2,7 @@
 
 
 build:
+	@echo "Checking the ports..."
 	@if lsof -Pi :5432 -sTCP:LISTEN -t >/dev/null ; then \
 		echo "Port 5432 is in use"; exit 1; \
 	fi
