@@ -4,4 +4,5 @@ export interface User{
     password : string;
     userCode : string;
     selectedProfileId : number;
+    activated : boolean;
 }

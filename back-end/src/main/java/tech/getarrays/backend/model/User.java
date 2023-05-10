@@ -30,11 +30,16 @@ public class User implements Serializable {
     @Getter @Setter
     private Long selectedProfileId;
 
+    @Column(nullable = false)
+    @Getter @Setter
+    private Boolean activated;
+
     public User(){}
 
-    public User(String email, String password, String userCode){
+    public User(String email, String password, String userCode, Boolean activated){
         this.email = email;
         this.password = password;
         this.userCode = userCode;
+        this.activated = activated;
     }
 }

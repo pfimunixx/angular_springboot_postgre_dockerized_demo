@@ -9,6 +9,7 @@ import { UsersComponent } from './views/users/users.component';
 import { MovementsComponent } from './components/movements/movements.component';
 import { UserPortalComponent } from './components/user-portal/user-portal.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 
 import { RegisterView } from './views/register/register.component';
 import { LoginView } from './views/login/login.component';
@@ -26,8 +27,12 @@ import { PaginatePipe } from './pipes/paginate.pipe';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { SendPasswordResetComponent } from './components/send-password-reset/send-password-reset.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 const appRoutes:Routes=[
+  {path:'', component:LoginComponent},
   {path:'register', component:RegisterView},
   {path:'user-portal', component:UserPortalComponent, canActivate:[AuthGuard]},
   {path:'login', component:LoginView},
@@ -39,14 +44,17 @@ const appRoutes:Routes=[
     AppComponent,
     RegisterComponent,
     LoginComponent,
-
     RegisterView,
     LoginView,
     UsersComponent,
     MovementsComponent,
     UserPortalComponent,
     ProfilesComponent,
-    PaginatePipe
+    PaginatePipe,
+    EmailVerificationComponent,
+    ActivateAccountComponent,
+    SendPasswordResetComponent,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,

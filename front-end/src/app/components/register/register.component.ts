@@ -55,6 +55,7 @@ export class RegisterComponent {
     }
     this.registerUser = this.registerForm.value;
     this.registerUser.password = Sha256.encrypt(this.registerUser.password);
+    this.registerUser.activated = false;
     this.userService.getUserByEmail(this.registerUser.email).subscribe(
       (response : User) => {
         console.log(response)
@@ -97,9 +98,4 @@ export class RegisterComponent {
       }
     )  
   }
-
-  onRegisterUser(registerForm: NgForm){
-
-  }
-
 }

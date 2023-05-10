@@ -39,4 +39,8 @@ export class UserService {
   public updateUser(user : User): Observable<User> {
     return this.http.put<User>(`${this.apiServerUrl}/user/update`, user);
   }
+
+  public sendPaswordReset(email : String) {
+    return this.http.post<void>(`${this.apiServerUrl}/user/send-password-reset`, email);
+  }
 }

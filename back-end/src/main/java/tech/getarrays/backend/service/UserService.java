@@ -52,4 +52,10 @@ public class UserService {
         return userRepo.findUserByEmailAndPassword(email, password)
                 .orElseThrow(() -> new UserNotFoundException("User with email " + email + " and password " + password + " was not found"));
     }
+
+    public void sendPasswordReset(String email){
+        User user = findUserByEmail(email);
+        String userCode = user.getUserCode();
+        //send password reset email
+    }
 }

@@ -61,9 +61,18 @@ public class UserResource {
     public ResponseEntity<User> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
             User user = userService.findUserByEmailAndPassword(email, password);
-            return ResponseEntity.ok().body(user);
+            if(user.getActivated())
+                return ResponseEntity.ok().body(user);
+            else
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @PostMapping("send-password-reset/{email}")
+    public ResponseEntity<?> sendPasswordReset(@RequestBody String email) {
+        userService.sendPasswordReset(email);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

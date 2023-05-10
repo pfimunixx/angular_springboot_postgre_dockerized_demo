@@ -1,16 +1,3 @@
-<!--<section class="login">
-    <div class="container login__container">
-        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-            <input class="form-control" type="text" placeholder="Email" [(ngModel)]="loginUser.email" #email="ngModel" name="email" required>
-            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                Email is required
-            </div>
-            <input class="form-control" type="password" placeholder="Password" ngModel name="password" required>
-            <button class="btn btn-primary" type="submit">Login</button>
-            <div class="text-secondary">Already don't have an account? <a href="/register">Click here to register</a></div>
-        </form>
-    </div>
-</section>-->
 <section class="login">
     <div class="container login__container">
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
