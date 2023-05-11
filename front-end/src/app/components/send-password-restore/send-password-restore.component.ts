@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ajaxPrefilter, error } from 'jquery';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
