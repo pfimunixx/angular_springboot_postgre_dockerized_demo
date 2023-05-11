@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import tech.getarrays.backend.exception.UserNotFoundException;
 import tech.getarrays.backend.model.Profile;
 import tech.getarrays.backend.model.User;
+import tech.getarrays.backend.service.EmailSenderService;
 import tech.getarrays.backend.service.UserService;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -36,6 +39,12 @@ public class UserResource {
     @GetMapping("/find/email/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
         User user = userService.findUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("find/user-code/{userCode}")
+    public ResponseEntity<User> getUserByUserCode(@PathVariable("userCode") String userCode) {
+        User user = userService.findUserByUserCode(userCode);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -70,9 +79,9 @@ public class UserResource {
         }
     }
 
-    @PostMapping("send-password-reset/{email}")
-    public ResponseEntity<?> sendPasswordReset(@RequestBody String email) {
-        userService.sendPasswordReset(email);
+    @PostMapping("/send-password-restore")
+    public ResponseEntity<?> sendPasswordRestore(@RequestBody String toEmail) throws IOException, MessagingException {
+        userService.sendPasswordRestore(toEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

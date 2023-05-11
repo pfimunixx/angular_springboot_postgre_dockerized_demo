@@ -28,15 +28,17 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
-import { SendPasswordResetComponent } from './components/send-password-reset/send-password-reset.component';
-import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { SendPasswordRestoreComponent } from './components/send-password-restore/send-password-restore.component';
+import { PasswordRestoreComponent } from './components/password-restore/password-restore.component';
 
 const appRoutes:Routes=[
   {path:'', component:LoginComponent},
   {path:'register', component:RegisterView},
   {path:'user-portal', component:UserPortalComponent, canActivate:[AuthGuard]},
   {path:'login', component:LoginView},
-  {path:'users', component:UsersComponent}
+  {path:'users', component:UsersComponent},
+  {path:'send-password-restore', component:SendPasswordRestoreComponent},
+  {path:'password-restore/:userCode', component:PasswordRestoreComponent}
 ];
 
 @NgModule({
@@ -53,8 +55,8 @@ const appRoutes:Routes=[
     PaginatePipe,
     EmailVerificationComponent,
     ActivateAccountComponent,
-    SendPasswordResetComponent,
-    PasswordResetComponent
+    SendPasswordRestoreComponent,
+    PasswordRestoreComponent
   ],
   imports: [
     BrowserModule,

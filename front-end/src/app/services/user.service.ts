@@ -28,6 +28,10 @@ export class UserService {
     return this.http.get<User>(`${this.apiServerUrl}/user/find/email/${email}`);
   }
 
+  public getUserByUserCode(userCode : string) : Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user/find/user-code/${userCode}`);
+  }
+
   public login(email: string, password: string): Observable<User> {
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     const body = new URLSearchParams();
@@ -40,7 +44,7 @@ export class UserService {
     return this.http.put<User>(`${this.apiServerUrl}/user/update`, user);
   }
 
-  public sendPaswordReset(email : String) {
-    return this.http.post<void>(`${this.apiServerUrl}/user/send-password-reset`, email);
+  public sendPaswordRestore(email : String): Observable<any> {
+    return this.http.post<void>(`${this.apiServerUrl}/user/send-password-restore`, email);
   }
 }
