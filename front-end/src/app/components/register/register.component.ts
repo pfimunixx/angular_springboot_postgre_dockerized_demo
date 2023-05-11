@@ -77,7 +77,6 @@ export class RegisterComponent {
                 this.userService.updateUser(response.user).subscribe(
                   (response : User) => {
                     console.log(response);
-                    alert("Thank you for registering!");
                     this.router.navigate(['login']);
                   },
                   (error : HttpErrorResponse) => {
@@ -88,8 +87,17 @@ export class RegisterComponent {
               (error : HttpErrorResponse) => {
                 alert(error.message)
               }
+            )            
+            this.userService.sendActivateAccount(response.email).subscribe(
+              () => {
+                alert("Thank you for registering! Check your mail inbox to activate yout account.");
+              },
+              (error : HttpErrorResponse) => {
+                console.log(error.message);
+              }
+
             )
-            alert("User registered!")
+            this.router.navigate(['']);
           },
           (error: HttpErrorResponse) => {
             alert(error.message);

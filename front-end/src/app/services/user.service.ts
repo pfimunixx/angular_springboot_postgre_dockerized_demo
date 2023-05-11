@@ -47,4 +47,8 @@ export class UserService {
   public sendPaswordRestore(email : String): Observable<any> {
     return this.http.post<void>(`${this.apiServerUrl}/user/send-password-restore`, email);
   }
+
+  public sendActivateAccount(email : String): Observable<any> {
+    return this.http.post<void>(`${this.apiServerUrl}/user/send-activate-account`, email);
+  }
 }

@@ -84,4 +84,10 @@ public class UserResource {
         userService.sendPasswordRestore(toEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/send-activate-account")
+    public ResponseEntity<?> sendActivateAccount(@RequestBody String toEmail) throws IOException, MessagingException {
+        userService.sendActivateAccount(toEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

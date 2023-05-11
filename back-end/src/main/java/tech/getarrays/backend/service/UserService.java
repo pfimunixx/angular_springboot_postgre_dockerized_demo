@@ -80,4 +80,15 @@ public class UserService {
         String htmlBody = new HtmlBodyBuilder().buildHtmlBody(templatePath, placeholders);
         emailSenderService.sendEmail(toEmail, "Password Restore", htmlBody, true);
     }
+
+    public void sendActivateAccount(String toEmail) throws IOException, MessagingException {
+        User user = findUserByEmail(toEmail);
+        String userCode = user.getUserCode();
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("userCode", userCode);
+        placeholders.put("email", toEmail);
+        String templatePath = new ResourcePathFinder(resourceLoader).getResourcePath("classpath:templates/htmlemail/activateAccount.html");
+        String htmlBody = new HtmlBodyBuilder().buildHtmlBody(templatePath, placeholders);
+        emailSenderService.sendEmail(toEmail, "Activate your account", htmlBody, true);
+    }
 }

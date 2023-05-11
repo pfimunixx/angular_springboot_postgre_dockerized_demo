@@ -9,7 +9,6 @@ import { UsersComponent } from './views/users/users.component';
 import { MovementsComponent } from './components/movements/movements.component';
 import { UserPortalComponent } from './components/user-portal/user-portal.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
-import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 
 import { RegisterView } from './views/register/register.component';
 import { LoginView } from './views/login/login.component';
@@ -38,7 +37,8 @@ const appRoutes:Routes=[
   {path:'login', component:LoginView},
   {path:'users', component:UsersComponent},
   {path:'send-password-restore', component:SendPasswordRestoreComponent},
-  {path:'password-restore/:userCode', component:PasswordRestoreComponent}
+  {path:'password-restore/:userCode', component:PasswordRestoreComponent},
+  {path:'activate-account/:userCode', component:ActivateAccountComponent}
 ];
 
 @NgModule({
@@ -53,7 +53,6 @@ const appRoutes:Routes=[
     UserPortalComponent,
     ProfilesComponent,
     PaginatePipe,
-    EmailVerificationComponent,
     ActivateAccountComponent,
     SendPasswordRestoreComponent,
     PasswordRestoreComponent
