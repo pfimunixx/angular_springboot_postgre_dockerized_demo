@@ -97,12 +97,12 @@ public class UserService {
         placeholders.put("userCode", userCode);
         placeholders.put("email", toEmail);
         String whereToLook = "templates/htmlemail/"+whichone;
-        String htmlBody = loadResourceFromJar(whereToLook);
+        String htmlBody = loadResource(whereToLook);
         htmlBody = substitutePlaceholders(htmlBody, placeholders);
         return htmlBody;
     }
 
-    private String loadResourceFromJar(String resourcePath) throws IOException {
+    private String loadResource(String resourcePath) throws IOException {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
                 throw new FileNotFoundException("Resource not found: " + resourcePath);
@@ -115,10 +115,6 @@ public class UserService {
             }
             return result.toString(StandardCharsets.UTF_8.name());
         }
-    }
-
-    private String loadResource(String resourcePath) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(resourcePath)), StandardCharsets.UTF_8);
     }
 
     private String substitutePlaceholders(String html, Map<String, String> placeholders) {

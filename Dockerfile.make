@@ -1,5 +1,18 @@
 .PHONY: build
 
+DOCKER_COMPOSE_CMD :=
+
+# Check if 'docker-compose' command is available
+ifeq (, $(shell which docker-compose))
+	# Check if 'docker compose' command is available
+	ifeq (, $(shell which docker))
+		$(error 'docker' command not found)
+	else
+		DOCKER_COMPOSE_CMD := docker compose
+	endif
+else
+	DOCKER_COMPOSE_CMD := docker-compose
+endif
 
 build:
 	@echo "Checking the ports..."
@@ -21,4 +34,4 @@ build:
 	@echo "Building Spring Boot application..."
 	cd ./back-end && ./gradlew bootJar --no-daemon
 	@echo "Building Docker image..."
-	docker compose up
+	$(DOCKER_COMPOSE_CMD) up
