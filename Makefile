@@ -2,9 +2,7 @@
 
 DOCKER_COMPOSE_CMD :=
 
-# Check if 'docker-compose' command is available
 ifeq (, $(shell which docker-compose))
-	# Check if 'docker compose' command is available
 	ifeq (, $(shell which docker))
 		$(error 'docker' command not found)
 	else
