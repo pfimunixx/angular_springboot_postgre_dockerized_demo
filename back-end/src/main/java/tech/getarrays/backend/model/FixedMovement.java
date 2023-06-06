@@ -30,13 +30,17 @@ public class FixedMovement implements Serializable {
     @Getter @Setter
     private BigDecimal amount;
 
+    @Column(nullable = false)
+    @Getter @Setter
+    private Date startDate;
+
     @Column(nullable = true)
     @Getter @Setter
     private Date endDate;
 
     @Column(nullable = false)
     @Getter @Setter
-    private String amount_type;
+    private String amountType;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,11 +50,11 @@ public class FixedMovement implements Serializable {
 
     public FixedMovement(){}
 
-    public FixedMovement(String concept, String description, BigDecimal amount, Date endDate, String amount_type){
+    public FixedMovement(String concept, String description, BigDecimal amount, Date endDate, String amountType){
         this.concept = concept;
         this.description = description;
         this.amount = amount;
         this.endDate = endDate;
-        this.amount_type = amount_type;
+        this.amountType = amountType;
     }
 }

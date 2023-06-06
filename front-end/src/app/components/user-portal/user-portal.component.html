@@ -8,6 +8,9 @@
         <li [class.active]="movementsActive" class="nav-item active">
           <a (click)="switchToMovements()" class="nav-link">Movements</a>
         </li>
+        <li [class.active]="insightsActive" class="nav-item">
+          <a (click)="switchToInsights()" class="nav-link">Insights</a>
+        </li>
         <li [class.active]="profilesActive" class="nav-item">
           <a (click)="switchToProfiles()" class="nav-link">Profiles</a>
         </li>
@@ -23,5 +26,6 @@
 <ng-container [ngSwitch]="componentName">
   <app-profiles *ngSwitchCase="'profiles'"></app-profiles>
   <app-movements *ngSwitchCase="'movements'"></app-movements>
+  <app-insights *ngSwitchCase="'insights'"></app-insights>
   <div *ngSwitchDefault>No component selected</div>
 </ng-container>

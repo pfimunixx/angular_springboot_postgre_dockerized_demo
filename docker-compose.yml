@@ -3,7 +3,7 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres
+    image: docker.imunixx.de/postgres:12.8
     restart: always
     ports:
       - "5432:5432"
@@ -20,7 +20,7 @@ services:
   
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4
+    image: docker.imunixx.de/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "pf@imunixx.de"
       PGADMIN_DEFAULT_PASSWORD: "yacJanAin7"
@@ -36,10 +36,7 @@ services:
 
   back-end:
     container_name: back-end
-    image: back-end-image
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
+    image: docker.imunixx.de/back-end-image
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
@@ -50,10 +47,8 @@ services:
       - mynetwork
 
   front-end:
-    image: front-end-image
+    image: docker.imunixx.de/front-end-image
     container_name: front-end
-    build:
-      context: ./front-end
     ports:
       - "4200:4200"
     depends_on:
@@ -63,10 +58,7 @@ services:
 
   nginx-server:
     container_name: nginx-server
-    image: nginx-image
-    build:
-      context: .
-      dockerfile: nginx/Dockerfile
+    image: docker.imunixx.de/nginx:1.21.1-alpine
     ports:
       - "8000:8000"
     depends_on:

@@ -9,6 +9,10 @@ import { UsersComponent } from './views/users/users.component';
 import { MovementsComponent } from './components/movements/movements.component';
 import { UserPortalComponent } from './components/user-portal/user-portal.component';
 import { ProfilesComponent } from './components/profiles/profiles.component';
+import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
+import { SendPasswordRestoreComponent } from './components/send-password-restore/send-password-restore.component';
+import { PasswordRestoreComponent } from './components/password-restore/password-restore.component';
+import { InsightsComponent } from './components/insights/insights.component';
 
 import { RegisterView } from './views/register/register.component';
 import { LoginView } from './views/login/login.component';
@@ -26,9 +30,7 @@ import { PaginatePipe } from './pipes/paginate.pipe';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { ActivateAccountComponent } from './components/activate-account/activate-account.component';
-import { SendPasswordRestoreComponent } from './components/send-password-restore/send-password-restore.component';
-import { PasswordRestoreComponent } from './components/password-restore/password-restore.component';
+
 
 const appRoutes:Routes=[
   {path:'', component:LoginComponent},
@@ -55,7 +57,8 @@ const appRoutes:Routes=[
     PaginatePipe,
     ActivateAccountComponent,
     SendPasswordRestoreComponent,
-    PasswordRestoreComponent
+    PasswordRestoreComponent,
+    InsightsComponent
   ],
   imports: [
     BrowserModule,

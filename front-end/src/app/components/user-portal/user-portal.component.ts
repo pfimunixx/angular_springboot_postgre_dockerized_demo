@@ -14,6 +14,7 @@ export class UserPortalComponent {
   componentName = 'movements';
   movementsActive : boolean = true;
   profilesActive : boolean = false;
+  insightsActive : boolean = false;
 
   constructor(private router : Router){
     this.resetTimeout();
@@ -42,12 +43,21 @@ export class UserPortalComponent {
     this.componentName = 'movements';
     this.movementsActive = true;
     this.profilesActive = false;
+    this.insightsActive = false;
   }
 
   switchToProfiles() {
     this.componentName = 'profiles';
     this.profilesActive = true;
     this.movementsActive = false;
+    this.insightsActive = false;
+  }
+
+  switchToInsights() {
+    this.componentName = 'insights';
+    this.profilesActive = false;
+    this.movementsActive = false;
+    this.insightsActive = true;
   }
 
 }

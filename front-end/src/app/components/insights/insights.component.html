@@ -1,0 +1,163 @@
+<section class="insights" id="insights">
+    <div class="container insights_container">
+        <button class="btn btn-success" (click)="onOpenModal(null, 'addFixedIncome')">Add fixed income</button>
+        <button class="btn btn-danger" (click)="onOpenModal(null, 'addFixedExpense')">Add fixed expense</button>
+
+        <table *ngIf="matFixedMovements && matFixedMovements.data.length > 0" class="table table-striped" mat-table [dataSource]="matFixedMovements" matSort>
+            <ng-container matColumnDef="Concept">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Concept</th>
+                <td mat-cell *matCellDef="let fixedMovement" (click)="onOpenModal(fixedMovement, 'edit')">{{fixedMovement.concept}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                <td mat-cell *matCellDef="let fixedMovement" (click)="onOpenModal(fixedMovement, 'edit')">{{fixedMovement.description}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Amount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                <td mat-cell *matCellDef="let fixedMovement" [class.text-danger]="fixedMovement.amount < 0" [class.text-success]="fixedMovement.amount >= 0" (click)="onOpenModal(fixedMovement, 'edit')">{{fixedMovement.amount}}€</td>
+            </ng-container>
+            <ng-container matColumnDef="Amount type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount type</th>
+                <td mat-cell *matCellDef="let fixedMovement" (click)="onOpenModal(fixedMovement, 'edit')">{{fixedMovement.amountType}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let movement; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator *ngIf="matFixedMovements && matFixedMovements.data.length > 0" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <h1 *ngIf="matFixedMovements && matFixedMovements.data.length === 0">No fixed movements to show</h1>
+
+        <!-- Add Fixed Movement Modal -->
+        <div class="modal fade" id="addFixedMovementModal" tabindex="-1" role="dialog" aria-labelledby="addFixedMovementModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addFixedMovementModalLabel">Add Movement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetAddFixedMovementForm()">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="addFixedMovementForm" (ngSubmit)="onAddFixedMovement()">
+                            <div class="form-group">
+                                <input type="text" name="concept" class="form-control" id="concept" placeholder="Concept" formControlName="concept" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['concept'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addFixedMovementForm.controls['concept'].errors" class="text-danger">
+                                <span *ngIf="submitted && addFixedMovementForm.controls['concept'].errors['required']">
+                                    Enter a concept
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="description" class="form-control" id="description" placeholder="Description" formControlName="description" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['description'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addFixedMovementForm.controls['description'].errors" class="text-danger">
+                                <span *ngIf="submitted && addFixedMovementForm.controls['description'].errors['maxLength']">
+                                    Description is too long (200 characters maximum)
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="amount" class="form-control" id="amount" placeholder="0.0" formControlName="amount" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['amount'].errors}">
+                            </div>
+                            <div *ngIf="submitted && addFixedMovementForm.controls['amount'].errors" class="text-danger">
+                                <span *ngIf="submitted && addFixedMovementForm.controls['amount'].errors?.['required']">
+                                    Enter an amount
+                                </span>
+                                <span *ngIf="submitted && addFixedMovementForm.controls['amount'].errors?.['pattern']">
+                                    Enter a positive value with 2 decimals (0.00)
+                                </span>
+                            </div>
+                            <select type="text" name="amountType" class="form-control" id="amountType" formControlName="amountType">
+                                <option [value]="item" *ngFor="let item of amountTypeList">{{item}}</option>
+                              </select>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose an start date</mat-label>
+                                    <input name="startDate" id="startDate" matInput [matDatepicker]="picker00" formControlName="startDate" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['startDate'].errors}">
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker00"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker00></mat-datepicker>
+                                </mat-form-field>
+                                <div *ngIf="submitted && addFixedMovementForm.controls['startDate'].errors" class="text-danger">
+                                    <span *ngIf="submitted && addFixedMovementForm.controls['startDate'].errors?.['required']">
+                                        Enter an start date
+                                    </span>
+                                </div>                            
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose an end date</mat-label>
+                                    <input name="endDate" id="endDate" matInput [matDatepicker]="picker01" formControlName="endDate" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['endDate'].errors}">
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker01"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker01></mat-datepicker>
+                                </mat-form-field>                           
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="add-fixed-movement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" >Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Fixed Movement Modal -->
+        <div class="modal fade" id="editFixedMovementModal" tabindex="-1" role="dialog" aria-labelledby="editFixedMovementModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editFixedMovementModalLabel">Edit Movement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form #editFixedMovementForm="ngForm">
+                            <input type="hidden" ngModel="{{editFixedMovement?.id}}" name="id" class="form-control" id="id" required>
+                            <div class="form-group">
+                                <input type="text" ngModel="{{editFixedMovement?.concept}}" name="concept" class="form-control" id="concept" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" ngModel="{{editFixedMovement?.description}}" name="description" class="form-control" id="description">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" ngModel="{{editFixedMovement?.amount}}" name="amount" class="form-control" id="amount" required>
+                            </div>
+                            <select type="text" ngModel="{{editFixedMovement?.amountType}}" name="amountType" class="form-control" id="amountType" formControlName="amountType" [ngClass]="{'is-invalid':submitted && addFixedMovementForm.controls['amountType'].errors}">
+                                <option [value]="item" *ngFor="let item of amountTypeList">{{item}}</option>
+                              </select>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose an start date</mat-label>
+                                    <input ngModel="{{editFixedMovement?.startDate}}" name="startDate" id="startDate" matInput [matDatepicker]="picker02" required>
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker02"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker02></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Choose an end date</mat-label>
+                                    <input ngModel="{{editFixedMovement?.endDate}}" name="endDate" id="endDate" matInput [matDatepicker]="picker03" required>
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker03"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker03></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="add-movement-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button (click)="onUpdateFixedMovement(editFixedMovementForm.value)" [disabled]="editFixedMovementForm.invalid" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button (click)="onOpenModal(editFixedMovementForm.value, 'delete')" class="btn btn-danger" data-dismiss="modal">Delete movement</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
