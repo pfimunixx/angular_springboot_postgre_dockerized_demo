@@ -5,9 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.backend.exception.UserNotFoundException;
-import tech.getarrays.backend.model.Profile;
 import tech.getarrays.backend.model.User;
-import tech.getarrays.backend.service.EmailSenderService;
 import tech.getarrays.backend.service.UserService;
 
 import javax.mail.MessagingException;
