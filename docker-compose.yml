@@ -34,33 +34,6 @@ services:
       - pgadmindata:/var/lib/pgadmin
       - ./pgadmin4:/root/.pgadmin
 
-  back-end:
-    container_name: back-end
-    image: back-end-image
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    networks:
-      - mynetwork
-
-  front-end:
-    image: front-end-image
-    container_name: front-end
-    build:
-      context: ./front-end
-    ports:
-      - "4200:4200"
-    depends_on:
-      - back-end
-    networks:
-      - mynetwork
-
 
 
 networks:

@@ -9,8 +9,8 @@ import tech.getarrays.backend.exception.UserNotFoundException;
 import tech.getarrays.backend.model.User;
 import tech.getarrays.backend.repository.UserRepo;
 
-import javax.mail.MessagingException;
-import javax.transaction.Transactional;
+import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;

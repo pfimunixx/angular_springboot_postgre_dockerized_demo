@@ -7,7 +7,7 @@ import tech.getarrays.backend.model.Profile;
 import tech.getarrays.backend.repository.ProfileRepo;
 import tech.getarrays.backend.repository.UserRepo;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service

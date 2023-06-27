@@ -1,6 +1,8 @@
 package tech.getarrays.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import tech.getarrays.backend.model.User;
 import tech.getarrays.backend.repository.UserRepo;
 
@@ -13,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Configuration
 public class HtmlTemplateGetterService {
     
     private final UserRepo userRepo;
-    
-    @Autowired
+
     public HtmlTemplateGetterService(UserRepo userRepo){
         this.userRepo = userRepo;
     }

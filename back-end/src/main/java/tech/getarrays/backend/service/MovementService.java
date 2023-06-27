@@ -6,7 +6,7 @@ import tech.getarrays.backend.exception.MovementNotFoundException;
 import tech.getarrays.backend.model.Movement;
 import tech.getarrays.backend.repository.MovementRepo;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service

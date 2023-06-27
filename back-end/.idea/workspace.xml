@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f7d66a71-a2e1-4392-b765-b86739896904" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/BackEndApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/FixedMovementResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/MovementResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/ProfileResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/SpendingExpectationResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/SystemResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/UserResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/exception/FixedMovementNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/exception/MovementNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/exception/ProfileNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/exception/SpendingExpectationNotFound.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/exception/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/model/FixedMovement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/model/Movement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/model/Profile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/model/SpendingExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/repository/FixedMovementRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/repository/MovementRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/repository/ProfileRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/repository/SpendingExpectationRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/repository/UserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/EmailSenderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/FixedMovementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/HtmlTemplateGetterService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/MovementService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/ProfileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/ResourcePathFinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/SpendingExpectationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tech/getarrays/backend/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/htmlemail/activateAccount.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/htmlemail/passwordRestore.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tech/getarrays/backend/BackEndApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tech/getarrays/backend/resource/ProfileResourceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tech/getarrays/backend/resource/UserResourceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tech/getarrays/backend/service/ProfileServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tech/getarrays/backend/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back-end/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../back-end/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2RmYAQAzd9MaPE0Qm8mtFus6tcm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="back-end" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="back-end" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f7d66a71-a2e1-4392-b765-b86739896904" name="Changes" comment="" />
+      <created>1687856580711</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1687856580711</updated>
+    </task>
+    <servers />
+  </component>
+</project>

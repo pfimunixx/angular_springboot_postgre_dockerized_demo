@@ -4,7 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.backend.service.EmailSenderService;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 @RestController
 @RequestMapping("/system")

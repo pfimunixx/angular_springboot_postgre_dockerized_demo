@@ -12,7 +12,7 @@ import tech.getarrays.backend.exception.UserNotFoundException;
 import tech.getarrays.backend.model.User;
 import tech.getarrays.backend.service.UserService;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

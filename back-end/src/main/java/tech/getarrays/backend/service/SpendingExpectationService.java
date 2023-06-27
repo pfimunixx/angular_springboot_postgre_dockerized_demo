@@ -6,7 +6,7 @@ import tech.getarrays.backend.exception.SpendingExpectationNotFound;
 import tech.getarrays.backend.model.SpendingExpectation;
 import tech.getarrays.backend.repository.SpendingExpectationRepo;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service

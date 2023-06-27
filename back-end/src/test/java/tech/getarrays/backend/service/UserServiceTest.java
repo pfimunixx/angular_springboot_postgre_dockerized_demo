@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import tech.getarrays.backend.model.User;
 import tech.getarrays.backend.repository.UserRepo;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;

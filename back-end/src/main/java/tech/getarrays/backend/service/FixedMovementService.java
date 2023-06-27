@@ -6,7 +6,7 @@ import tech.getarrays.backend.exception.FixedMovementNotFoundException;
 import tech.getarrays.backend.model.FixedMovement;
 import tech.getarrays.backend.repository.FixedMovementRepo;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service

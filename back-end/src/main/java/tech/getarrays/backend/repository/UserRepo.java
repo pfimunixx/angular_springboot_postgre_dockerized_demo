@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tech.getarrays.backend.model.Profile;
 import tech.getarrays.backend.model.User;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
